@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { useContext, useEffect, useState } from "react";
 import { CategoryWidgetContext } from "../provider/categoryWidget";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { ExclamationTriangleIcon, TrashIcon } from "@radix-ui/react-icons";
 
 const ManageWidgetDialog = ({
   children,
@@ -36,8 +36,18 @@ const ManageWidgetDialog = ({
     setWidgetList(updatedWidgets);
   };
 
+  const removeWidgetHandler = (widgetId) => {
+    const updatedWidgets = [...widgetList];
+
+    const widgetUpdatedList = updatedWidgets.map((widget) =>
+      widget.id === widgetId ? { ...widget, delete: true } : widget
+    );
+    setWidgetList(widgetUpdatedList);
+  };
+
   const saveHandler = () => {
-    updateWidgets(widgetList, categoryId);
+    const newWidgetList = widgetList.filter((widget) => !widget.delete);
+    updateWidgets(newWidgetList, categoryId);
     setOpen(false);
   };
 
@@ -78,6 +88,7 @@ const ManageWidgetDialog = ({
                         widget.id
                       )}
                       checked={widget.isVisible}
+                      disabled={widget.delete}
                     />
                     <label
                       htmlFor={widget.id}
@@ -85,6 +96,15 @@ const ManageWidgetDialog = ({
                     >
                       {widget.name}
                     </label>
+                    <Button
+                      onClick={() => removeWidgetHandler(widget.id)}
+                      className="h-5 w-5"
+                      size="icon"
+                      variant="outline"
+                      disabled={widget.delete}
+                    >
+                      <TrashIcon />
+                    </Button>
                   </div>
                 );
               })

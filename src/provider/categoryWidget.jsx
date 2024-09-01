@@ -4,7 +4,6 @@ import {
   getCategoriesFromLocal,
   saveCategoriesToLocal,
 } from "../utils/storage";
-
 export const CategoryWidgetContext = createContext({
   categories: null,
   addCategory: () => {},
