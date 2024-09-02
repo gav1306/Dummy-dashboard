@@ -96,15 +96,16 @@ const ManageWidgetDialog = ({
                     >
                       {widget.name}
                     </label>
-                    <Button
-                      onClick={() => removeWidgetHandler(widget.id)}
-                      className="h-5 w-5"
-                      size="icon"
-                      variant="outline"
-                      disabled={widget.delete}
-                    >
-                      <TrashIcon />
-                    </Button>
+                    {!widget.delete && (
+                      <Button
+                        onClick={() => removeWidgetHandler(widget.id)}
+                        className="h-5 w-5"
+                        size="icon"
+                        variant="outline"
+                      >
+                        <TrashIcon />
+                      </Button>
+                    )}
                   </div>
                 );
               })
